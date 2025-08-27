@@ -499,10 +499,20 @@
         });
 
         function initializeApp() {
-            // 現在の年の月を生成
-            const currentYear = new Date().getFullYear();
-            for (let month = 1; month <= 12; month++) {
-                const monthKey = `${currentYear}-${month.toString().padStart(2, '0')}`;
+            // 現在の年度の月を生成（4月スタート、3月終わり）
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1;
+
+            // 年度を決定（4月以降なら当年度、3月以前なら前年度開始）
+            const fiscalYear = currentMonth >= 4 ? currentYear : currentYear - 1;
+
+            // 4月から翌年3月まで
+            for (let i = 0; i < 12; i++) {
+                const month = ((i + 4 - 1) % 12) + 1; // 4月から開始
+                const year = month >= 4 ? fiscalYear : fiscalYear + 1;
+                const monthKey = `${year}-${month.toString().padStart(2, '0')}`;
+
                 if (!monthlyData[monthKey]) {
                     monthlyData[monthKey] = {
                         hours: 0,
@@ -517,20 +527,28 @@
             const monthlySection = document.getElementById('monthlySection');
             monthlySection.innerHTML = '';
 
-            const months = ['1月', '2月', '3月', '4月', '5月', '6月',
-                '7月', '8月', '9月', '10月', '11月', '12月'];
+            // 4月スタートの月順序
+            const monthsInOrder = ['4月', '5月', '6月', '7月', '8月', '9月',
+                '10月', '11月', '12月', '1月', '2月', '3月'];
 
-            const currentYear = new Date().getFullYear();
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1;
 
-            months.forEach((monthName, index) => {
-                const monthKey = `${currentYear}-${(index + 1).toString().padStart(2, '0')}`;
+            // 年度を決定
+            const fiscalYear = currentMonth >= 4 ? currentYear : currentYear - 1;
+
+            monthsInOrder.forEach((monthName, index) => {
+                const monthNum = ((index + 4 - 1) % 12) + 1; // 4月から開始
+                const year = monthNum >= 4 ? fiscalYear : fiscalYear + 1;
+                const monthKey = `${year}-${monthNum.toString().padStart(2, '0')}`;
                 const data = monthlyData[monthKey] || { hours: 0, bonus: 0, totalEarned: 0 };
 
                 const monthCard = document.createElement('div');
                 monthCard.className = 'month-card';
                 monthCard.innerHTML = `
                     <div class="month-header">
-                        <div class="month-title">${monthName}</div>
+                        <div class="month-title">${monthName} (${year}年)</div>
                         <div class="month-summary">
                             <div class="total-amount">月収: ¥${data.totalEarned.toLocaleString()}</div>
                             <div class="remaining-amount" id="remaining-${monthKey}">残り: ¥${calculateRemaining().toLocaleString()}</div>
@@ -670,15 +688,22 @@
                 chartInstance.destroy();
             }
 
-            const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+            // 4月スタートの月順序
+            const monthsInOrder = ['4月', '5月', '6月', '7月', '8月', '9月',
+                '10月', '11月', '12月', '1月', '2月', '3月'];
             const monthlyEarnings = [];
             const cumulativeEarnings = [];
             let cumulative = 0;
 
-            const currentYear = new Date().getFullYear();
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1;
+            const fiscalYear = currentMonth >= 4 ? currentYear : currentYear - 1;
 
             for (let i = 0; i < 12; i++) {
-                const monthKey = `${currentYear}-${(i + 1).toString().padStart(2, '0')}`;
+                const monthNum = ((i + 4 - 1) % 12) + 1; // 4月から開始
+                const year = monthNum >= 4 ? fiscalYear : fiscalYear + 1;
+                const monthKey = `${year}-${monthNum.toString().padStart(2, '0')}`;
                 const data = monthlyData[monthKey] || { totalEarned: 0 };
                 monthlyEarnings.push(data.totalEarned);
                 cumulative += data.totalEarned;
@@ -688,7 +713,7 @@
             chartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: months,
+                    labels: monthsInOrder,
                     datasets: [{
                         label: '月収',
                         data: monthlyEarnings,
@@ -714,7 +739,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: '月別収入推移',
+                            text: '年度別収入推移（4月〜3月）',
                             font: {
                                 size: 16,
                                 weight: 'bold'
@@ -765,12 +790,21 @@
             const tableBody = document.getElementById('monthlyDataTable');
             tableBody.innerHTML = '';
 
-            const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
-            const currentYear = new Date().getFullYear();
+            // 4月スタートの月順序
+            const monthsInOrder = ['4月', '5月', '6月', '7月', '8月', '9月',
+                '10月', '11月', '12月', '1月', '2月', '3月'];
+
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1;
+            const fiscalYear = currentMonth >= 4 ? currentYear : currentYear - 1;
+
             let cumulative = 0;
 
-            months.forEach((monthName, index) => {
-                const monthKey = `${currentYear}-${(index + 1).toString().padStart(2, '0')}`;
+            monthsInOrder.forEach((monthName, index) => {
+                const monthNum = ((index + 4 - 1) % 12) + 1; // 4月から開始
+                const year = monthNum >= 4 ? fiscalYear : fiscalYear + 1;
+                const monthKey = `${year}-${monthNum.toString().padStart(2, '0')}`;
                 const data = monthlyData[monthKey] || { hours: 0, bonus: 0, totalEarned: 0 };
                 cumulative += data.totalEarned;
 
