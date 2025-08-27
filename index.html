@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>時給ベース収入管理アプリ</title>
     <style>
         * {
@@ -15,57 +16,57 @@
             font-family: 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
             background: linear-gradient(135deg, #ffeef5 0%, #f8d7da 50%, #ffb3c6 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 8px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 100%;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(255, 182, 193, 0.3);
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.18);
             overflow: hidden;
         }
 
         .header {
             background: linear-gradient(135deg, #ffb3c6 0%, #ff9aa2 100%);
             color: white;
-            padding: 30px;
+            padding: 18px 8px;
             text-align: center;
         }
 
         h1 {
-            font-size: 2.2em;
-            margin-bottom: 10px;
+            font-size: 1.5em;
+            margin-bottom: 8px;
             font-weight: 700;
         }
 
         .subtitle {
             opacity: 0.9;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         .main-content {
-            padding: 30px;
+            padding: 12px 6px;
         }
 
         .settings-section {
             background: #fef7f7;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            border: 2px solid #ffb3c6;
+            padding: 12px 8px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            border: 1.5px solid #ffb3c6;
         }
 
         .settings-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            align-items: end;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: stretch;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
         .form-group:last-child {
@@ -74,18 +75,18 @@
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #d63384;
             font-weight: 600;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         input[type="number"] {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ffb3c6;
-            border-radius: 10px;
-            font-size: 1.1em;
+            padding: 10px 12px;
+            border: 1.5px solid #ffb3c6;
+            border-radius: 8px;
+            font-size: 1em;
             transition: all 0.3s ease;
             background: white;
         }
@@ -93,56 +94,57 @@
         input[type="number"]:focus {
             outline: none;
             border-color: #ff9aa2;
-            box-shadow: 0 0 0 3px rgba(255, 179, 198, 0.2);
+            box-shadow: 0 0 0 2px rgba(255, 179, 198, 0.18);
         }
 
         .monthly-section {
-            margin-bottom: 30px;
+            margin-bottom: 18px;
         }
 
         .month-card {
             background: white;
-            border: 2px solid #ffb3c6;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
+            border: 1.5px solid #ffb3c6;
+            border-radius: 12px;
+            padding: 12px 8px;
+            margin-bottom: 10px;
             transition: all 0.3s ease;
         }
 
         .month-card:hover {
-            box-shadow: 0 8px 25px rgba(255, 179, 198, 0.15);
-            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 179, 198, 0.10);
+            transform: translateY(-1px);
         }
 
         .month-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #fef7f7;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #fef7f7;
         }
 
         .month-title {
-            font-size: 1.3em;
+            font-size: 1.1em;
             font-weight: 700;
             color: #d63384;
         }
 
         .month-summary {
-            text-align: right;
-            font-size: 0.9em;
+            text-align: left;
+            font-size: 0.95em;
         }
 
         .total-amount {
             color: #d63384;
             font-weight: 700;
-            font-size: 1.1em;
+            font-size: 1em;
         }
 
         .remaining-amount {
             color: #28a745;
             font-weight: 600;
+            font-size: 0.95em;
         }
 
         .remaining-amount.warning {
@@ -154,70 +156,70 @@
         }
 
         .month-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .summary-section {
             background: linear-gradient(135deg, #fef7f7 0%, #ffb3c6 100%);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 20px;
+            padding: 12px 8px;
+            border-radius: 12px;
+            margin-bottom: 12px;
             text-align: center;
         }
 
         .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
         .summary-item {
             background: white;
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #ffb3c6;
+            padding: 10px 8px;
+            border-radius: 8px;
+            border: 1.5px solid #ffb3c6;
         }
 
         .summary-label {
-            font-size: 0.9em;
+            font-size: 0.95em;
             color: #d63384;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .summary-value {
-            font-size: 1.5em;
+            font-size: 1.2em;
             font-weight: 700;
             color: #333;
         }
 
         .progress-container {
-            margin: 20px 0;
+            margin: 10px 0;
         }
 
         .progress-bar {
             width: 100%;
-            height: 25px;
+            height: 18px;
             background: white;
-            border-radius: 15px;
+            border-radius: 10px;
             overflow: hidden;
-            border: 2px solid #ffb3c6;
+            border: 1.5px solid #ffb3c6;
             position: relative;
         }
 
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #ffb3c6, #ff9aa2);
-            border-radius: 12px;
+            border-radius: 8px;
             transition: width 0.8s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-weight: 600;
-            font-size: 0.9em;
+            font-size: 0.85em;
         }
 
         .progress-fill.warning {
@@ -230,25 +232,25 @@
 
         .button-container {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 18px;
         }
 
         .btn-summary {
             background: linear-gradient(135deg, #ffb3c6 0%, #ff9aa2 100%);
             color: white;
-            padding: 15px 40px;
+            padding: 12px 28px;
             border: none;
-            border-radius: 50px;
-            font-size: 1.2em;
+            border-radius: 32px;
+            font-size: 1.1em;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 15px rgba(255, 179, 198, 0.3);
+            box-shadow: 0 4px 10px rgba(255, 179, 198, 0.22);
         }
 
         .btn-summary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 179, 198, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(255, 179, 198, 0.28);
         }
 
         .modal {
@@ -257,34 +259,40 @@
             z-index: 1000;
             left: 0;
             top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
             animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
             background-color: white;
-            margin: 5% auto;
+            margin: 10% auto;
             padding: 0;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 800px;
-            max-height: 85vh;
+            border-radius: 16px;
+            width: 98vw;
+            max-width: 98vw;
+            max-height: 90vh;
             overflow-y: auto;
             animation: slideIn 0.3s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(-50px);
+                transform: translateY(-30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -294,19 +302,19 @@
         .modal-header {
             background: linear-gradient(135deg, #ffb3c6 0%, #ff9aa2 100%);
             color: white;
-            padding: 25px;
+            padding: 16px 8px;
             text-align: center;
-            border-radius: 20px 20px 0 0;
+            border-radius: 16px 16px 0 0;
         }
 
         .modal-body {
-            padding: 30px;
+            padding: 12px 8px;
         }
 
         .close {
             color: white;
             float: right;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
             cursor: pointer;
             opacity: 0.8;
@@ -318,23 +326,24 @@
 
         .chart-container {
             width: 100%;
-            height: 400px;
-            margin: 20px 0;
+            height: 220px;
+            margin: 10px 0;
         }
 
         .monthly-data-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 10px;
             background: white;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(255, 179, 198, 0.1);
+            box-shadow: 0 2px 3px rgba(255, 179, 198, 0.08);
+            font-size: 0.95em;
         }
 
         .monthly-data-table th,
         .monthly-data-table td {
-            padding: 12px 15px;
+            padding: 8px 4px;
             text-align: center;
             border-bottom: 1px solid #f8f9fa;
         }
@@ -349,32 +358,63 @@
             background: #fef7f7;
         }
 
-        @media (max-width: 768px) {
-            .settings-row {
-                grid-template-columns: 1fr;
+        /* スマホ向け最適化 */
+        @media (max-width: 600px) {
+            body {
+                padding: 2px;
             }
-            
+
+            .container {
+                border-radius: 8px;
+                box-shadow: none;
+            }
+
+            .header {
+                padding: 10px 2px;
+            }
+
+            h1 {
+                font-size: 1.1em;
+            }
+
+            .main-content {
+                padding: 4px 2px;
+            }
+
+            .settings-section,
+            .summary-section,
+            .month-card,
+            .modal-content,
+            .modal-header,
+            .modal-body {
+                padding: 6px 2px !important;
+                border-radius: 8px !important;
+            }
+
+            .summary-grid,
+            .settings-row,
             .month-inputs {
-                grid-template-columns: 1fr;
+                gap: 6px !important;
             }
-            
-            .summary-grid {
-                grid-template-columns: 1fr;
+
+            .btn-summary {
+                padding: 8px 16px;
+                font-size: 1em;
             }
-            
-            .month-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
+
+            .chart-container {
+                height: 140px;
             }
-            
-            .modal-content {
-                margin: 10% auto;
-                width: 95%;
+
+            .monthly-data-table th,
+            .monthly-data-table td {
+                padding: 4px 2px;
+                font-size: 0.85em;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -413,7 +453,7 @@
                         <div class="summary-value" id="remainingAmount">¥1,300,000</div>
                     </div>
                 </div>
-                
+
                 <div class="progress-container">
                     <div class="progress-bar">
                         <div id="progressFill" class="progress-fill" style="width: 0%;">0%</div>
@@ -455,11 +495,11 @@
                         <div class="summary-value" id="modalAverageWage">¥0</div>
                     </div>
                 </div>
-                
+
                 <div class="chart-container">
                     <canvas id="incomeChart"></canvas>
                 </div>
-                
+
                 <table class="monthly-data-table">
                     <thead>
                         <tr>
@@ -483,7 +523,7 @@
         let chartInstance = null;
 
         // 初期化
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             initializeApp();
             loadData();
             generateMonthlyCards();
@@ -491,20 +531,12 @@
         });
 
         function initializeApp() {
-            // 現在の年度の月を生成（4月スタート、3月終わり）
+            // 1月〜12月
             const currentDate = new Date();
             const currentYear = currentDate.getFullYear();
-            const currentMonth = currentDate.getMonth() + 1;
-            
-            // 年度を決定（4月以降なら当年度、3月以前なら前年度開始）
-            const fiscalYear = currentMonth >= 4 ? currentYear : currentYear - 1;
-            
-            // 4月から翌年3月まで
-            for (let i = 0; i < 12; i++) {
-                const month = ((i + 4 - 1) % 12) + 1; // 4月から開始
-                const year = month >= 4 ? fiscalYear : fiscalYear + 1;
-                const monthKey = `${year}-${month.toString().padStart(2, '0')}`;
-                
+
+            for (let month = 1; month <= 12; month++) {
+                const monthKey = `${currentYear}-${month.toString().padStart(2, '0')}`;
                 if (!monthlyData[monthKey]) {
                     monthlyData[monthKey] = {
                         hours: 0,
@@ -518,23 +550,27 @@
         function generateMonthlyCards() {
             const monthlySection = document.getElementById('monthlySection');
             monthlySection.innerHTML = '';
-            
-            const months = ['1月', '2月', '3月', '4月', '5月', '6月', 
-                           '7月', '8月', '9月', '10月', '11月', '12月'];
-            
-            const currentYear = new Date().getFullYear();
-            
-            months.forEach((monthName, index) => {
-                const monthKey = `${currentYear}-${(index + 1).toString().padStart(2, '0')}`;
+
+            // 1月〜12月
+            const monthsInOrder = ['1月', '2月', '3月', '4月', '5月', '6月',
+                '7月', '8月', '9月', '10月', '11月', '12月'];
+
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+
+            monthsInOrder.forEach((monthName, index) => {
+                const monthNum = index + 1;
+                const year = currentYear;
+                const monthKey = `${year}-${monthNum.toString().padStart(2, '0')}`;
                 const data = monthlyData[monthKey] || { hours: 0, bonus: 0, totalEarned: 0 };
-                
+
                 const monthCard = document.createElement('div');
                 monthCard.className = 'month-card';
                 monthCard.innerHTML = `
                     <div class="month-header">
-                        <div class="month-title">${monthName}</div>
+                        <div class="month-title">${monthName} (${year}年)</div>
                         <div class="month-summary">
-                            <div class="total-amount">月収: ¥${data.totalEarned.toLocaleString()}</div>
+                            <div class="total-amount">月収: ¥${data.totalEarned.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                             <div class="remaining-amount" id="remaining-${monthKey}">残り: ¥${calculateRemaining().toLocaleString()}</div>
                         </div>
                     </div>
@@ -542,13 +578,13 @@
                         <div class="form-group">
                             <label for="hours-${monthKey}">労働時間</label>
                             <input type="number" id="hours-${monthKey}" value="${data.hours}" 
-                                   placeholder="0" min="0" step="0.5" 
+                                   placeholder="0" min="0" step="0.01" 
                                    onchange="updateMonthlyData('${monthKey}')">
                         </div>
                         <div class="form-group">
                             <label for="bonus-${monthKey}">特別手当（円）</label>
                             <input type="number" id="bonus-${monthKey}" value="${data.bonus}" 
-                                   placeholder="0" min="0" 
+                                   placeholder="0" min="0" step="0.01"
                                    onchange="updateMonthlyData('${monthKey}')">
                         </div>
                     </div>
@@ -561,49 +597,49 @@
             const hours = parseFloat(document.getElementById(`hours-${monthKey}`).value) || 0;
             const bonus = parseFloat(document.getElementById(`bonus-${monthKey}`).value) || 0;
             const hourlyWage = parseFloat(document.getElementById('hourlyWage').value) || 0;
-            
+
             const wageEarned = hours * hourlyWage;
             const totalEarned = wageEarned + bonus;
-            
+
             monthlyData[monthKey] = {
                 hours: hours,
                 bonus: bonus,
                 totalEarned: totalEarned
             };
-            
+
             // 月収表示を更新
             const monthCard = document.querySelector(`#hours-${monthKey}`).closest('.month-card');
             const totalAmountEl = monthCard.querySelector('.total-amount');
-            totalAmountEl.textContent = `月収: ¥${totalEarned.toLocaleString()}`;
-            
+            totalAmountEl.textContent = `月収: ¥${totalEarned.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
             updateSummary();
             saveData();
         }
 
         function updateSummary() {
             const yearlyLimit = parseFloat(document.getElementById('yearlyLimit').value) || 1300000;
-            
+
             let totalHours = 0;
             let totalEarned = 0;
-            
+
             Object.values(monthlyData).forEach(data => {
                 totalHours += data.hours;
                 totalEarned += data.totalEarned;
             });
-            
+
             const remaining = Math.max(0, yearlyLimit - totalEarned);
             const progressPercentage = Math.min(100, (totalEarned / yearlyLimit) * 100);
-            
+
             // サマリー表示を更新
-            document.getElementById('totalHours').textContent = `${totalHours.toFixed(1)}時間`;
-            document.getElementById('totalEarned').textContent = `¥${totalEarned.toLocaleString()}`;
-            document.getElementById('remainingAmount').textContent = `¥${remaining.toLocaleString()}`;
-            
+            document.getElementById('totalHours').textContent = `${totalHours.toFixed(2)}時間`;
+            document.getElementById('totalEarned').textContent = `¥${totalEarned.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            document.getElementById('remainingAmount').textContent = `¥${remaining.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
             // プログレスバーを更新
             const progressFill = document.getElementById('progressFill');
             progressFill.style.width = progressPercentage + '%';
-            progressFill.textContent = progressPercentage.toFixed(1) + '%';
-            
+            progressFill.textContent = progressPercentage.toFixed(2) + '%';
+
             // 色を更新
             progressFill.className = 'progress-fill';
             if (progressPercentage >= 100) {
@@ -611,12 +647,12 @@
             } else if (progressPercentage >= 90) {
                 progressFill.classList.add('warning');
             }
-            
+
             // 各月の残り表示を更新
             Object.keys(monthlyData).forEach(monthKey => {
                 const remainingEl = document.getElementById(`remaining-${monthKey}`);
                 if (remainingEl) {
-                    remainingEl.textContent = `残り: ¥${remaining.toLocaleString()}`;
+                    remainingEl.textContent = `残り: ¥${remaining.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
                     remainingEl.className = 'remaining-amount';
                     if (remaining <= 0) {
                         remainingEl.classList.add('danger');
@@ -649,48 +685,53 @@
         function updateModalContent() {
             let totalHours = 0;
             let totalEarned = 0;
-            
+
             Object.values(monthlyData).forEach(data => {
                 totalHours += data.hours;
                 totalEarned += data.totalEarned;
             });
-            
+
             const averageWage = totalHours > 0 ? (totalEarned - Object.values(monthlyData).reduce((sum, data) => sum + data.bonus, 0)) / totalHours : 0;
-            
-            document.getElementById('modalTotalHours').textContent = `${totalHours.toFixed(1)}時間`;
-            document.getElementById('modalTotalEarned').textContent = `¥${totalEarned.toLocaleString()}`;
-            document.getElementById('modalAverageWage').textContent = `¥${averageWage.toFixed(0)}`;
-            
+
+            document.getElementById('modalTotalHours').textContent = `${totalHours.toFixed(2)}時間`;
+            document.getElementById('modalTotalEarned').textContent = `¥${totalEarned.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            document.getElementById('modalAverageWage').textContent = `¥${averageWage.toFixed(2)}`;
+
             updateChart();
             updateDataTable();
         }
 
         function updateChart() {
             const ctx = document.getElementById('incomeChart').getContext('2d');
-            
+
             if (chartInstance) {
                 chartInstance.destroy();
             }
-            
-            const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+
+            // 1月〜12月
+            const monthsInOrder = ['1月', '2月', '3月', '4月', '5月', '6月',
+                '7月', '8月', '9月', '10月', '11月', '12月'];
             const monthlyEarnings = [];
             const cumulativeEarnings = [];
             let cumulative = 0;
-            
-            const currentYear = new Date().getFullYear();
-            
+
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+
             for (let i = 0; i < 12; i++) {
-                const monthKey = `${currentYear}-${(i + 1).toString().padStart(2, '0')}`;
+                const monthNum = i + 1;
+                const year = currentYear;
+                const monthKey = `${year}-${monthNum.toString().padStart(2, '0')}`;
                 const data = monthlyData[monthKey] || { totalEarned: 0 };
                 monthlyEarnings.push(data.totalEarned);
                 cumulative += data.totalEarned;
                 cumulativeEarnings.push(cumulative);
             }
-            
+
             chartInstance = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: months,
+                    labels: monthsInOrder,
                     datasets: [{
                         label: '月収',
                         data: monthlyEarnings,
@@ -716,7 +757,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: '月別収入推移',
+                            text: '年度別収入推移（1月〜12月）',
                             font: {
                                 size: 16,
                                 weight: 'bold'
@@ -735,8 +776,8 @@
                                 color: '#d63384'
                             },
                             ticks: {
-                                callback: function(value) {
-                                    return '¥' + value.toLocaleString();
+                                callback: function (value) {
+                                    return '¥' + value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                                 }
                             }
                         },
@@ -753,36 +794,42 @@
                                 drawOnChartArea: false,
                             },
                             ticks: {
-                                callback: function(value) {
-                                    return '¥' + value.toLocaleString();
+                                callback: function (value) {
+                                    return '¥' + value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                                 }
                             }
                         }
                     }
-                }
-            });
+                });
         }
 
         function updateDataTable() {
             const tableBody = document.getElementById('monthlyDataTable');
             tableBody.innerHTML = '';
-            
-            const months = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
-            const currentYear = new Date().getFullYear();
+
+            // 1月〜12月
+            const monthsInOrder = ['1月', '2月', '3月', '4月', '5月', '6月',
+                '7月', '8月', '9月', '10月', '11月', '12月'];
+
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+
             let cumulative = 0;
-            
-            months.forEach((monthName, index) => {
-                const monthKey = `${currentYear}-${(index + 1).toString().padStart(2, '0')}`;
+
+            monthsInOrder.forEach((monthName, index) => {
+                const monthNum = index + 1;
+                const year = currentYear;
+                const monthKey = `${year}-${monthNum.toString().padStart(2, '0')}`;
                 const data = monthlyData[monthKey] || { hours: 0, bonus: 0, totalEarned: 0 };
                 cumulative += data.totalEarned;
-                
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${monthName}</td>
-                    <td>${data.hours.toFixed(1)}時間</td>
-                    <td>¥${data.bonus.toLocaleString()}</td>
-                    <td>¥${data.totalEarned.toLocaleString()}</td>
-                    <td>¥${cumulative.toLocaleString()}</td>
+                    <td>${data.hours.toFixed(2)}時間</td>
+                    <td>¥${data.bonus.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td>¥${data.totalEarned.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td>¥${cumulative.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                 `;
                 tableBody.appendChild(row);
             });
@@ -796,14 +843,22 @@
                     yearlyLimit: document.getElementById('yearlyLimit').value
                 }
             };
-            // メモリに保存（実際のアプリではlocalStorageを使用可能）
+            // localStorageに保存
+            localStorage.setItem('incomeCheckerData', JSON.stringify(data));
             window.appData = data;
         }
 
         function loadData() {
-            // メモリから読み込み（実際のアプリではlocalStorageから読み込み可能）
-            if (window.appData) {
-                const data = window.appData;
+            // localStorageから読み込み
+            let data = null;
+            if (localStorage.getItem('incomeCheckerData')) {
+                try {
+                    data = JSON.parse(localStorage.getItem('incomeCheckerData'));
+                } catch (e) { }
+            } else if (window.appData) {
+                data = window.appData;
+            }
+            if (data) {
                 monthlyData = data.monthlyData || {};
                 if (data.settings) {
                     document.getElementById('hourlyWage').value = data.settings.hourlyWage || '';
@@ -813,20 +868,20 @@
         }
 
         // 設定変更時の処理
-        document.getElementById('hourlyWage').addEventListener('change', function() {
+        document.getElementById('hourlyWage').addEventListener('change', function () {
             // 全ての月のデータを再計算
             Object.keys(monthlyData).forEach(monthKey => {
                 updateMonthlyData(monthKey);
             });
         });
 
-        document.getElementById('yearlyLimit').addEventListener('change', function() {
+        document.getElementById('yearlyLimit').addEventListener('change', function () {
             updateSummary();
             saveData();
         });
 
         // モーダルの外側クリックで閉じる
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             const modal = document.getElementById('summaryModal');
             if (event.target === modal) {
                 closeSummaryModal();
@@ -834,4 +889,5 @@
         }
     </script>
 </body>
+
 </html>
